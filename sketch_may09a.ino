@@ -57,8 +57,6 @@ void loop() {
 
   int distance = getDistance();  // finds the current distance measuremnt using the ultrasonic sensor
 
-
-
   if (distance < distanceThreshold) {     // if the car is closer than the threshold the spot is taken and RED LED turns ON
     availableSpots = 0;
     digitalWrite(GREENpin, LOW);
@@ -76,6 +74,9 @@ void loop() {
   lcd.setCursor(0, 1);
   lcd.print("Spots: ");
   lcd.print(availableSpots);
+
+
+   updateDisplay(availableSpots);  // Custom output function
   
 // plus prints the distance on the serial monitor (to debug if neecessery)
   Serial.print("Distance: ");
@@ -85,6 +86,8 @@ void loop() {
   delay(1000);
 }
 
+
+// Custom function #1
 // triggers the ultrasonic sensor
 int getDistance() {
   digitalWrite(TRIGpin, LOW);
@@ -97,4 +100,23 @@ int getDistance() {
   long duration = pulseIn(ECHOpin, HIGH);
   int distance = duration * 0.034 / 2;
   return distance;
+}
+
+
+// Custom function #2
+void updateDisplay(int spots) {
+  if (spots == 0) {
+    digitalWrite(GREENpin, LOW);
+    digitalWrite(REDpin, HIGH);
+  } else {
+    digitalWrite(GREENpin, HIGH);
+    digitalWrite(REDpin, LOW);
+  }
+
+  lcd.setCursor(0, 0);
+  lcd.print("Available Space: ");
+  lcd.setCursor(0, 1);
+  lcd.print("Spots: ");
+  lcd.print(spots);
+  lcd.print("   ");  // Clear old characters
 }
