@@ -6,8 +6,7 @@
 
 
 // includs the librabriees needd for using an LCD screen
-#include <Wire.h>
-#include <LiquidCrystal_I2C.h>
+#include <LiquidCrystal.h>
 
 // Pins for the RED and GREEN LEDS plus the ultrasonic sensor's trigger and echo
 const int REDpin = 4;
@@ -17,11 +16,6 @@ const int ECHOpin = 3;
 
 // LCD pin connections: RS, Enable, Data4, Data5, Data6, Data7
 const int rs = 7, en = 8, d4 = 9, d5 = 10, d6 = 11, d7 = 12;
-
-
-// LCD 
-LiquidCrystal_I2C lcd(0x27, 16, 2);
-
 
 
 // Parameters
@@ -56,28 +50,19 @@ void loop() {
   delay(2000); 
 
   int distance = getDistance();  // finds the current distance measuremnt using the ultrasonic sensor
+  
 
-  if (distance < distanceThreshold) {     // if the car is closer than the threshold the spot is taken and RED LED turns ON
+    // Check if car is present
+  if (distance < distanceThreshold) {
     availableSpots = 0;
-    digitalWrite(GREENpin, LOW);
-    digitalWrite(REDpin, HIGH);
-  } else { // if the car is further than the threshold the spot is taken and GREEM LED turns ON
+  } else {
     availableSpots = 1;
-    digitalWrite(GREENpin, HIGH);
-    digitalWrite(REDpin, LOW);
   }
 
 
-// LCD uptade for the number of available spots
-  lcd.setCursor(0, 0);
-  lcd.print("Available Space:");
-  lcd.setCursor(0, 1);
-  lcd.print("Spots: ");
-  lcd.print(availableSpots);
-
-
    updateDisplay(availableSpots);  // Custom output function
-  
+
+
 // plus prints the distance on the serial monitor (to debug if neecessery)
   Serial.print("Distance: ");
   Serial.print(distance);
@@ -85,7 +70,8 @@ void loop() {
 
   delay(1000);
 }
-
+   
+  
 
 // Custom function #1
 // triggers the ultrasonic sensor
