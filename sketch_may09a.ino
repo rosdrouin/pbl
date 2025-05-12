@@ -6,8 +6,8 @@
 
 
 // includs the librabriees needd for using an LCD screen
-#include <LiquidCrystal.h>
-
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
 
 // Pins for the RED and GREEN LEDS plus the ultrasonic sensor's trigger and echo
 const int REDpin = 4;
@@ -20,7 +20,8 @@ const int rs = 7, en = 8, d4 = 9, d5 = 10, d6 = 11, d7 = 12;
 
 
 // LCD 
-LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
 
 
 // Parameters
