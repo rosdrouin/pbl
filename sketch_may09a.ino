@@ -26,7 +26,7 @@ LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
 // Parameters
 const int totalSpots = 1;     // total spots available (1 because 1 ultrasonic sensor)
 int availableSpots = 1;     // keps track of how many are available
-const int distanceThreshold = 5;  // distance in cm to decide if thee spot is considred occupied or not
+const int distanceThreshold = 50;  // distance in cm to decide if thee spot is considred occupied or not
 
 
 // set the pin modes 
